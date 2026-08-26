@@ -5,6 +5,7 @@ on:
     branches:
       - master
       - main
+      - Rushaway-patch-1
     tags:
       - "*"
   pull_request:
