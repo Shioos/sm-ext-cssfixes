@@ -1,12 +1,10 @@
 name: Build AlliedModders Extension
 
 on:
-  workflow_dispatch:
   push:
     branches:
       - master
       - main
-      - Rushaway-patch-1
     tags:
       - "*"
   pull_request:
@@ -14,81 +12,8 @@ on:
       - master
       - main
 
-name: Compile CSSFixes on Ubuntu 22.04
-
-on:
-  workflow_dispatch:
-  push:
-    branches:
-      - master
-      - main
-      - Rushaway-patch-1
-  pull_request:
-    branches:
-      - master
-      - main
-
 jobs:
-  build:
-    name: Build (Ubuntu 22.04)
-    runs-on: ubuntu-22.04
-
-    steps:
-      - name: Checkout Extension Code
-        uses: actions/checkout@v4
-        with:
-          submodules: recursive
-          path: extension
-
-      - name: Setup System Dependencies
-        run: |
-          sudo dpkg --add-architecture i386
-          sudo apt-get update
-          sudo apt-get install -y gcc-multilib g++-multilib python3-setuptools python3-pip
-
-      - name: Checkout AMBuild
-        uses: actions/checkout@v4
-        with:
-          repository: alliedmodders/ambuild
-          path: ambuild
-
-      - name: Install AMBuild
-        run: |
-          cd ambuild
-          sudo python3 setup.py install
-
-      - name: Checkout HL2SDK (CS:S)
-        uses: actions/checkout@v4
-        with:
-          repository: alliedmodders/hl2sdk
-          ref: css
-          path: hl2sdk-css
-
-      - name: Checkout MetaMod:Source
-        uses: actions/checkout@v4
-        with:
-          repository: alliedmodders/metamod-source
-          ref: master
-          path: mmsource
-
-      - name: Checkout SourceMod
-        uses: actions/checkout@v4
-        with:
-          repository: alliedmodders/sourcemod
-          ref: master
-          path: sourcemod
-          submodules: recursive
-
-      - name: Compile
-        run: |
-          cd extension
-          mkdir build
-          cd build
-          python3 ../configure.py --enable-optimize -s css --sm-path=../../sourcemod --mms-path=../../mmsource --hl2sdk-root=../../
-          ambuild
-
-      - name: Upload Artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: cssfixes-ubuntu-22.04
-          path: extension/build/package/
+  build-release-extension:
+    uses: Dolly132/ci-workflows/.github/workflows/shared_build_release_am_extension.yml@main
+    with:
+      sdks: "css"
