@@ -1,6 +1,7 @@
 name: Build AlliedModders Extension
 
 on:
+  workflow_dispatch:
   push:
     branches:
       - master
