@@ -6,7 +6,7 @@ on:
       - master
       - main
       - Rushaway-patch-1
-  tags:
+    tags:
     - '*'
   pull_request:
     branches:
