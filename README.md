@@ -1,4 +1,4 @@
-# Counter-Strike: Source bug fixes (new update fix)
+# Counter-Strike: Source bug fixes (new update)
 ### Fixes crash in filter_activator_*->TestActivator() when activator isn't valid anymore.
 ### Fixes game_ui lag and player_speedmod turning off your flashlight.
 
